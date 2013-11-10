@@ -1,0 +1,25 @@
+body {
+	padding: 0;
+	margin: 0;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+svg {
+	height: 100%;
+	width: 100%;
+}
+
+a {
+	color: #00B7FF;
+}
+
+.link {
+	stroke: #000;
+	stroke-width: 5px;
+}
+
+.host {
+	fill: #EEE;
+	stroke: darkgreen;
+	stroke-width: 5px;
+}
+

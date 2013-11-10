@@ -1,0 +1,11 @@
+{
+	"registry": {
+		"name": "barbara",
+		"role": "barbara-registry-ws",
+		"version": "1.0.0"
+	},
+	"www": {
+		"role": "barbara-monitor-www",
+		"version": "1.0.0"
+	}
+}
