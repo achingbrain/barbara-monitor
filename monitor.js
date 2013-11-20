@@ -5,16 +5,17 @@ var LOG = require("winston"),
 	http = require("http"),
 	path = require("path"),
 	bonvoyage = require("bonvoyage"),
-	mdns = require("mdns2");
+	mdns = require("mdns2"),
+	path = require("path");
 
 // set up arguments
-nconf.argv().env().file("config.json");
+nconf.argv().env().file(path.resolve(__dirname, "config.json"));
 
 var container = new Container();
 container.register("config", nconf);
 
 // web controllers
-container.createAndRegister("homeController", require("./routes/Home"));
+container.createAndRegister("homeController", require(path.resolve(__dirname, "./routes/Home")));
 
 // inject a dummy seaport - we'll overwrite this when the real one becomes available
 container.register("seaport", {
@@ -40,14 +41,14 @@ bonvoyageClient.register({
 
 		// all environments
 		app.set("port", port);
-		app.set("views", "./views");
+		app.set("views", path.resolve(__dirname, "./views"));
 		app.set("view engine", "jade");
 		app.use(express.logger("dev"));
 		app.use(express.urlencoded())
 		app.use(express.json())
 		app.use(express.methodOverride());
 		app.use(app.router);
-		app.use(express.static("./public"));
+		app.use(express.static(path.resolve(__dirname, "./public")));
 
 		// development only
 		app.use(express.errorHandler());
@@ -64,15 +65,6 @@ bonvoyageClient.register({
 		});
 		advert.start();
 	}
-});
-bonvoyageClient.find(function(error, seaport) {
-	if(error) {
-		LOG.error("Error finding seaport", error);
-
-		return;
-	}
-
-	LOG.info("Found seaport server");
 });
 bonvoyageClient.on("seaportUp", function(seaport) {
 	container.register("seaport", seaport);
